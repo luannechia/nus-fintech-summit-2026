@@ -1,0 +1,41 @@
+Here are some of the XRPL features and their implementations in our project, and why we used them.
+
+1) XRPL Testnet & Wallets
+The application connects to the XRP Ledger Testnet using a JSON-RPC client.
+Two on-chain wallets are programmatically created and funded via the XRPL faucet:
+Client wallet (payer)
+Freelancer wallet (payee)
+
+This project demonstrates real, self-custodied wallets and on-ledger identities without financial intermediaries. While traditional 
+platforms rely on corporate policies to ensure users get paid, this system uses on-chain escrows to cryptographically guarantee proof 
+of funds. This replaces the need for blind trust with mathematical verification.
+
+
+2) On-Chain Escrow
+The client locks funds in an XRPL Escrow object using EscrowCreate.
+Escrow parameters:
+Destination: freelancer wallet
+Amount: fixed payment amount
+FinishAfter: earliest time funds can be released
+CancelAfter: deadline for refund if the job fails
+
+Escrow ensures funds are pre-funded and trustlessly locked, removing payment risk for freelancers, solving counterparty risk.
+
+3) Escrow Completion & Instant Settlement
+Once the finish condition is met, the client submits an EscrowFinish transaction.
+Funds are released instantly to the freelancer’s wallet.
+
+This achieves instant payment upon task completion, directly addressing delayed freelancer payouts, highlighting the ability of on-chain
+transactions to be fast and seamless.
+
+4) On-Ledger Transparency & Verifiability
+All actions produce real XRPL transaction hashes.
+Balances before and after escrow execution are retrieved from the ledger.
+Transactions can be independently verified via the XRPL Testnet Explorer.
+
+Payments are auditable, irreversible, and trust-minimized, showing validity and transparency, mitigating potential hidden platform
+fees.
+
+Overall, we believe that the incorporation of XRPL features in the gig economy would greatly enhance the current state of it, fixing its biggest flaws. 
+By making payments fast, transparent, and secure, we can protect freelancers and create a fairer system for everyone, without needing a middleman to 
+manage the money.
